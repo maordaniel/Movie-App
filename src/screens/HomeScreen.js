@@ -64,8 +64,9 @@ function HomeScreen (props) {
                       'https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token='+
                   data.accessToken.toString());
                   props.username(userInfo.data.name);
-                  props.userPic(
-                      `https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=${userInfo.data.id}&height=50&width=50&ext=1585350027&hash=AeTXWnk-5zAVFrWo`)
+                  console.log(userInfo.data.id);
+                  const userPicture = await axios.get(`https://graph.facebook.com/${userInfo.data.id}/picture?type=square&redirect=false`);
+                  props.userPic(userPicture.data.data.url);
                   props.login();
                   }
                 );
@@ -84,7 +85,7 @@ function HomeScreen (props) {
         <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
             <View style={{width:'100%'}}>
                 <Text style={styles.h1}>
-                    Welcome {props.auth.username ? props.auth.username : "Stranger"} !
+                    Welcome {props.auth.username ? props.auth.username : "Stranger!"}
                 </Text>
             </View>
             {props.auth.userPic ?
@@ -97,7 +98,7 @@ function HomeScreen (props) {
             <TouchableOpacity style={{alignItems:'center', margin:10, top:'10%'}} onPress={()=> navigate('Movies')}>
                 <AppBox stl={{width:300, backgroundColor:'black'}}>
                     <Text style={{textAlign:'center', color:'#FFF', fontSize:16}}>
-                        Movies List
+                        Movie List
                     </Text>
                 </AppBox>
             </TouchableOpacity>:
@@ -109,21 +110,25 @@ function HomeScreen (props) {
         {!props.auth.isLogged ?
         <View style={{marginBottom:20, flexDirection:'row', justifyContent:'center'}}>
             <SocialIcon
-              style={{borderRadius:10, width:'45%'}}
+             fontStyle={{fontSize:12}}
+              style={{borderRadius:10, width:'46%',}}
               title='Sign In With Google'
               button
               type='google'
               onPress={GoogleSignInUser}
             />
             <SocialIcon
-              style={{borderRadius:10, width:'45%'}}
+              fontStyle={{fontSize:12}}
+              style={{borderRadius:10, width:'46%'}}
               title='Sign In With Facebook'
               button
               type='facebook'
               onPress={loginFacebook}
             />
         </View>:
-        <Button title={'Logout'} onPress={()=> props.logout()}/>}
+        <Button buttonStyle={{
+              backgroundColor:'red'
+            }} title={'Logout'} onPress={()=> props.logout()}/>}
     </SafeAreaView>
     </>
     );

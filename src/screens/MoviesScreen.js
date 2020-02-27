@@ -15,6 +15,7 @@ import styles from '../styles/AppStyle'
 import {GetData} from '../services/api';
 import {connect} from 'react-redux';
 import {favoriteMovies} from '../redux/actions/main_actions';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 function MoviesScreen (props) {
@@ -40,39 +41,41 @@ function MoviesScreen (props) {
     <StatusBar barStyle="dark-content" />
     <SafeAreaView style={styles.screen_2} >
         <AppBar navigate={props.navigation}/>
-        <AppBox stl={{marginBottom:40, flexDirection:'row-reverse', justifyContent:'center'}}>
-           <Image style={{width:30, height:30}} source={require('../assets/icons/ic_movies.png')}/>
-           <Text style={{...styles.h2, textAlign:'center', fontSize:23}}>
-               Most Popular Movies
-           </Text>
-           <Image style={{width:30, height:30}} source={require('../assets/icons/ic_movies.png')}/>
-        </AppBox>
-        <AppBox stl={{height:'75%'}}>
-        <FlatList
-            keyExtractor={(item, index) => index.toString()}
-            data={movieList}
-            renderItem={({item}) =>
-                <ScrollView>
-                    <AppBox stl={{margin:5}}>
-                        <TouchableOpacity onPress={()=> navigate('Details', {item:item})}>
-                            <Text style={{...styles.h3, fontSize:15}}>
-                                {item.title}
-                            </Text>
-                        </TouchableOpacity>
+        <View style={{flex:1,height:hp('100%')}}>
+            <AppBox stl={{marginBottom:40, flexDirection:'row-reverse', justifyContent:'center'}}>
+               <Image style={{width:30, height:30}} source={require('../assets/icons/ic_movies.png')}/>
+               <Text style={{...styles.h2, textAlign:'center', fontSize:23}}>
+                   Most Popular Movies
+               </Text>
+               <Image style={{width:30, height:30}} source={require('../assets/icons/ic_movies.png')}/>
+            </AppBox>
+            <AppBox stl={{height:hp('45%')}}>
+            <FlatList
+                keyExtractor={(item, index) => index.toString()}
+                data={movieList}
+                renderItem={({item}) =>
+                    <ScrollView>
+                        <AppBox stl={{margin:5}}>
+                            <TouchableOpacity onPress={()=> navigate('Details', {item:item})}>
+                                <Text style={{...styles.h3, fontSize:15}}>
+                                    {item.title}
+                                </Text>
+                            </TouchableOpacity>
+                        </AppBox>
+                    </ScrollView>
+                }
+            />
+            </AppBox>
+            <View style={{position: 'absolute', bottom: 10,width:'100%'}}>
+                <TouchableOpacity onPress={() => props.main.favoriteMovies.length > 0 ? navigate('Favorite'):
+                    alert('Please add movie to your favorites!')}>
+                    <AppBox stl={{backgroundColor:'#aebe8a'}}>
+                        <Text style={{...styles.h2, fontSize:20, textAlign:'center'}}>
+                            Favorite Movies
+                        </Text>
                     </AppBox>
-                </ScrollView>
-            }
-        />
-        </AppBox>
-        <View style={{justifyContent:'flex-end', bottom:'5%'}}>
-            <TouchableOpacity onPress={() => props.main.favoriteMovies.length > 0 ? navigate('Favorite'):
-                alert('Please add movie to your favorites!')}>
-                <AppBox stl={{backgroundColor:'#aebe8a'}}>
-                    <Text style={{...styles.h2, fontSize:20, textAlign:'center'}}>
-                        Favorite Movies
-                    </Text>
-                </AppBox>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
         </View>
     </SafeAreaView>
     </>

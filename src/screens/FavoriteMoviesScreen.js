@@ -55,7 +55,7 @@ function FavoriteMovies (props) {
                                 style={{width:40, height:60}}
                                 source={{uri: "https://image.tmdb.org/t/p/w500/"+item.poster}}
                             />
-                            <View style={{marginRight:"12%"}}>
+                            <View style={{marginRight:"10%"}}>
                                 <TouchableOpacity onPress={() => deleteItem(item)}>
                                     <Image style={{width:35, height:35}} source={require('../assets/icons/ic_trash.png')}/>
                                 </TouchableOpacity>

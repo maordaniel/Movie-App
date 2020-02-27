@@ -48,31 +48,33 @@ function MovieDetails (props) {
     <StatusBar barStyle="dark-content" />
     <SafeAreaView style={styles.screen_2} >
         <AppBar navigate={props.navigation}/>
-        <AppBox >
-        <ScrollView>
-            <View style={{alignItems:'center'}}>
-                <Text style={styles.h1}>
-                    {item.title}
-                </Text>
-                <Image
-                style={{width: 200, height: 300}}
-                source={{uri: "https://image.tmdb.org/t/p/w500/"+item.poster_path}}
-                />
-                <Text style={{...styles.h2, margin:10}}>
-                    {item.overview}
-                </Text>
-                <View style={{flexDirection:'row-reverse', alignItems:'center', marginTop:10}}>
-                    <Text style={{...styles.h3, fontSize:18}}>
-                        Rating:{item.vote_average}
+        <View style={{flex:1,marginBottom:10}}>
+            <AppBox >
+            <ScrollView>
+                <View style={{alignItems:'center'}}>
+                    <Text style={styles.h1}>
+                        {item.title}
                     </Text>
-                    <Image style={{top:2, width:30, height:30}} source={require('../assets/icons/ic_rating.png')}/>
+                    <Image
+                    style={{width: 200, height: 300}}
+                    source={{uri: "https://image.tmdb.org/t/p/w500/"+item.poster_path}}
+                    />
+                    <Text style={{...styles.h2, margin:10}}>
+                        {item.overview}
+                    </Text>
+                    <View style={{flexDirection:'row-reverse', alignItems:'center', marginTop:10}}>
+                        <Text style={{...styles.h3, fontSize:18}}>
+                            Rating:{item.vote_average}
+                        </Text>
+                        <Image style={{top:2, width:30, height:30}} source={require('../assets/icons/ic_rating.png')}/>
+                    </View>
+                    <View style={{marginTop:10,width:'100%'}}>
+                        {buttonItem()}
+                    </View>
                 </View>
-                <View style={{marginTop:10}}>
-                    {buttonItem()}
-                </View>
-            </View>
-            </ScrollView>
-        </AppBox>
+                </ScrollView>
+            </AppBox>
+        </View>
     </SafeAreaView>
     </>
     );
