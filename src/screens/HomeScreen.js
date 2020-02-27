@@ -60,9 +60,8 @@ function HomeScreen (props) {
               } else {
                   AccessToken.getCurrentAccessToken().then(
                   async(data) => {
-                  const userInfo = await axios.get(
-                      'https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token='+
-                  data.accessToken.toString());
+                   const userInfo = await axios.get(
+                      `https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=${data.accessToken.toString()}`);
                   props.username(userInfo.data.name);
                   console.log(userInfo.data.id);
                   const userPicture = await axios.get(`https://graph.facebook.com/${userInfo.data.id}/picture?type=square&redirect=false`);
